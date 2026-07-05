@@ -22,7 +22,7 @@ export default function About() {
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-[1.2] tracking-tight">
-              I am a Data Science student passionate about <span className="text-[#1F5CE3]">Machine Learning</span> & Web Development
+              I am a Passionate about <span className="text-[#1F5CE3]">Machine Learning</span> & Web Development
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed">
               {portfolioData.about.description}
@@ -90,7 +90,7 @@ export default function About() {
 
         {/* MIDDLE SECTION: Stats Row */}
         <div className="bg-white rounded-[2.5rem] p-10 md:p-12 shadow-sm border border-gray-100/50">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x-0 md:divide-x divide-gray-100">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-4 divide-x-0 md:divide-x divide-gray-100">
             {portfolioData.about.stats.map((stat, idx) => {
               const Icon = icons[stat.icon as keyof typeof icons] || icons.Circle;
               return (

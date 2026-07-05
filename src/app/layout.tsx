@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Caveat } from "next/font/google";
-// import Chatbot from "@/components/Chatbot";
+import Chatbot from "@/components/Chatbot";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -36,7 +36,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}
-        {/* <Chatbot /> */}
+        <Chatbot />
       </body>
     </html>
   );
