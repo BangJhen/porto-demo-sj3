@@ -4,6 +4,7 @@ import {
   Code, User, Camera, LineChart
 } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { MagneticButton } from '@/components/ui/magnetic-button';
 import Image from 'next/image';
 import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
 import { TextHoverEffect } from '@/components/ui/text-hover-effect';
@@ -35,12 +36,16 @@ export default function Hero() {
 
           {/* Buttons */}
           <div className="flex flex-wrap items-center gap-4 pt-4">
-            <a href="#projects" className="px-6 py-3.5 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30 flex items-center gap-2">
-              <Rocket size={18} /> View Projects
-            </a>
-            <a href="#contact" className="px-6 py-3.5 rounded-xl bg-white text-gray-700 font-medium hover:bg-gray-50 transition-colors border border-gray-200 flex items-center gap-2 shadow-sm">
-              <Mail size={18} /> Contact Me
-            </a>
+            <MagneticButton>
+              <a href="#projects" className="px-6 py-3.5 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30 flex items-center gap-2">
+                <Rocket size={18} /> View Projects
+              </a>
+            </MagneticButton>
+            <MagneticButton>
+              <a href="#contact" className="px-6 py-3.5 rounded-xl bg-white text-gray-700 font-medium hover:bg-gray-50 transition-colors border border-gray-200 flex items-center gap-2 shadow-sm">
+                <Mail size={18} /> Contact Me
+              </a>
+            </MagneticButton>
           </div>
 
           {/* Social Links */}
