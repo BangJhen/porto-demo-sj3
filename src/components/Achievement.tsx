@@ -3,8 +3,9 @@ import React from 'react';
 import SectionWrapper from './SectionWrapper';
 import { 
   Trophy, Medal, Star, BarChart3, Calendar, 
-  TrendingUp, ChevronLeft, ChevronRight, Award
+  TrendingUp, ChevronLeft, ChevronRight, Award, icons
 } from 'lucide-react';
+import portfolioData from '@/data/portfolio.json';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, EffectCoverflow } from 'swiper/modules';
 
@@ -15,64 +16,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/effect-coverflow';
 
 export default function Achievement() {
-  const stats = [
-    { value: '5+', label: 'Competitions Won & Finalist', icon: <Trophy size={28} /> },
-    { value: '1st', label: 'Place in Kaggle Data Slayer', icon: <Award size={28} /> },
-    { value: '2x', label: 'National Finalist', icon: <Medal size={28} /> },
-  ];
-
-  const competitions = [
-    {
-      id: 1,
-      place: '1st Place',
-      title: 'Kaggle Data Slayer 2025',
-      organizer: 'Telkom University Purwokerto',
-      date: 'Nov 2025 - Dec 2025',
-      desc: 'Developed a landmark-based video analysis pipeline (MediaPipe, YOLOv8) and ensemble model (XGBoost, RF, CatBoost) achieving 1st place.',
-      icon: <Trophy size={24} />,
-      badge: 'Champion'
-    },
-    {
-      id: 2,
-      place: 'Finalist',
-      title: 'GEMASTIK XVIII Data Mining',
-      organizer: 'Kemendikbudristek',
-      date: 'Sep 2025',
-      desc: 'Developed a fraud detection system for P2P lending using GCN and optimized ensemble learning, outperforming state-of-the-art baselines.',
-      icon: <Medal size={24} />,
-      badge: 'National Finalist'
-    },
-    {
-      id: 3,
-      place: '10th Place',
-      title: 'Kaggle Datavidia',
-      organizer: 'HMIF - Institut Teknologi Bandung',
-      date: 'Mar 2025 - Apr 2025',
-      desc: 'Built a deep learning model to forecast daily food prices for 13 commodities across 34 Indonesian provinces using NHITS.',
-      icon: <Award size={24} />,
-      badge: 'Top 10'
-    },
-    {
-      id: 4,
-      place: '3rd Place',
-      title: 'ADIKARA Data Mining',
-      organizer: 'PRODIGI & FIF Telkom University',
-      date: 'Nov 2024 - Jan 2025',
-      desc: 'Developed a hybrid deep learning architecture combining CNN and LSTM networks to forecast multivariate food price indices.',
-      icon: <Award size={24} />,
-      badge: '2nd Runner Up'
-    },
-    {
-      id: 5,
-      place: 'Finalist',
-      title: 'Olimpiade Jaringan Mikrotik',
-      organizer: 'Citraweb Solusi Teknologi',
-      date: 'Oct 2023',
-      desc: 'National finalist in Mikrotik Networking Olympiad for SMK students, competing and gaining valuable practical networking experience.',
-      icon: <Medal size={24} />,
-      badge: 'National Finalist'
-    }
-  ];
+  const stats = portfolioData.achievements.stats;
+  const competitions = portfolioData.achievements.competitions;
 
   return (
     <SectionWrapper id="achievements" className="bg-[#fafafa] relative overflow-hidden">
@@ -98,19 +43,22 @@ export default function Achievement() {
           {/* Stats Card */}
           <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100/60 shrink-0">
             <div className="flex flex-wrap gap-8 md:gap-12 justify-center md:justify-between text-center">
-              {stats.map((stat, idx) => (
-                <div key={idx} className="flex flex-col items-center gap-3">
-                  <div className="text-[#1F5CE3]">
-                    {stat.icon}
+              {stats.map((stat, idx) => {
+                const Icon = icons[stat.icon as keyof typeof icons] || icons.Circle;
+                return (
+                  <div key={idx} className="flex flex-col items-center gap-3">
+                    <div className="text-[#1F5CE3]">
+                      <Icon size={28} />
+                    </div>
+                    <div>
+                      <h4 className="text-2xl font-bold text-gray-900">{stat.value}</h4>
+                      <p className="text-gray-500 text-xs font-medium uppercase tracking-wider mt-1 whitespace-pre-line leading-snug w-24">
+                        {stat.label.replace(' ', '\n')}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-gray-900">{stat.value}</h4>
-                    <p className="text-gray-500 text-xs font-medium uppercase tracking-wider mt-1 whitespace-pre-line leading-snug w-24">
-                      {stat.label.replace(' ', '\n')}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -148,46 +96,49 @@ export default function Achievement() {
             }}
             className="!pb-16 pt-4"
           >
-            {competitions.map((comp) => (
-              <SwiperSlide key={comp.id} className="h-auto px-2 md:px-0">
-                {({ isActive }) => (
-                  <div className={`h-full bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 transition-all duration-300 flex flex-col ${isActive ? 'shadow-lg scale-100' : 'shadow-sm scale-95 opacity-80'}`}>
-                    
-                    <div className="w-14 h-14 rounded-2xl bg-[#1F5CE3]/10 text-[#1F5CE3] flex items-center justify-center shrink-0 mb-6">
-                      {comp.icon}
-                    </div>
-
-                    <div className="flex-1 flex flex-col">
-                      <h3 className="text-xl font-bold text-gray-900 leading-snug mb-2">
-                        {comp.place} — <br/>
-                        {comp.title}
-                      </h3>
+            {competitions.map((comp) => {
+              const Icon = icons[comp.icon as keyof typeof icons] || icons.Circle;
+              return (
+                <SwiperSlide key={comp.id} className="h-auto px-2 md:px-0">
+                  {({ isActive }) => (
+                    <div className={`h-full bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 transition-all duration-300 flex flex-col ${isActive ? 'shadow-lg scale-100' : 'shadow-sm scale-95 opacity-80'}`}>
                       
-                      <p className="text-[#1F5CE3] font-medium text-sm mb-4">
-                        {comp.organizer}
-                      </p>
-                      
-                      <div className="flex items-center gap-2 text-gray-500 mb-4">
-                        <Calendar size={16} />
-                        <span className="text-sm">{comp.date}</span>
+                      <div className="w-14 h-14 rounded-2xl bg-[#1F5CE3]/10 text-[#1F5CE3] flex items-center justify-center shrink-0 mb-6">
+                        <Icon size={24} />
                       </div>
-                      
-                      <p className="text-gray-600 text-[13px] leading-relaxed mb-auto">
-                        {comp.desc}
-                      </p>
 
-                      <div className="mt-6 pt-6 border-t border-gray-50">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#1F5CE3]/10 text-[#1F5CE3] rounded-full text-sm font-medium">
-                          <Award size={16} />
-                          {comp.badge}
+                      <div className="flex-1 flex flex-col">
+                        <h3 className="text-xl font-bold text-gray-900 leading-snug mb-2">
+                          {comp.place} — <br/>
+                          {comp.title}
+                        </h3>
+                        
+                        <p className="text-[#1F5CE3] font-medium text-sm mb-4">
+                          {comp.organizer}
+                        </p>
+                        
+                        <div className="flex items-center gap-2 text-gray-500 mb-4">
+                          <Calendar size={16} />
+                          <span className="text-sm">{comp.date}</span>
+                        </div>
+                        
+                        <p className="text-gray-600 text-[13px] leading-relaxed mb-auto">
+                          {comp.desc}
+                        </p>
+
+                        <div className="mt-6 pt-6 border-t border-gray-50">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#1F5CE3]/10 text-[#1F5CE3] rounded-full text-sm font-medium">
+                            <Award size={16} />
+                            {comp.badge}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                  </div>
-                )}
-              </SwiperSlide>
-            ))}
+                    </div>
+                  )}
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
 
           {/* Custom Navigation Arrows */}

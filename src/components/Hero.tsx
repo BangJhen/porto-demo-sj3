@@ -1,33 +1,36 @@
-"use client";
-import React from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { Rocket, Mail } from 'lucide-react';
+import SectionWrapper from './SectionWrapper';
+import { 
+  Rocket, Mail, Phone, MapPin, Link as LinkIcon,
+  Code, User, Camera, LineChart
+} from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { TextHoverEffect } from "@/components/ui/text-hover-effect";
-import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
+import Image from 'next/image';
+import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect';
+import { TextHoverEffect } from '@/components/ui/text-hover-effect';
+import portfolioData from '@/data/portfolio.json';
 
 export default function Hero() {
   return (
-    <section id="home" className="relative w-full min-h-screen flex items-center pt-20 pb-10 bg-white overflow-hidden">
+    <SectionWrapper id="home" className="bg-white overflow-hidden relative">
       <BackgroundRippleEffect />
-      <div className="max-w-7xl mx-auto w-full px-6 md:px-10 lg:px-16 grid md:grid-cols-2 gap-12 items-center relative z-10">
+
+      <div className="grid md:grid-cols-2 gap-12 items-center relative z-10 w-full">
         
         {/* Left Content */}
-        <div className="space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 font-medium text-sm border border-blue-100 shadow-sm">
+        <div className="space-y-6">
+          {/* <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-sm font-medium">
             <Rocket size={16} />
-            <span>AI / ML Engineer</span>
-          </div>
+            <span>{portfolioData.personal.role}</span>
+          </div> */}
           
           <div className="space-y-1">
             <div className="h-[80px] sm:h-[100px] md:h-[120px] -ml-2">
-              <TextHoverEffect text="AMMAR" />
+              <TextHoverEffect text={portfolioData.hero.hoverText} />
             </div>
           </div>
 
           <p className="text-gray-500 text-lg md:text-xl max-w-xl leading-relaxed">
-            Data Science student at Telkom University passionate about Machine Learning, Artificial Intelligence, and Web Development. I build intelligent solutions for real-world problems.
+            {portfolioData.hero.description}
           </p>
 
           {/* Buttons */}
@@ -42,29 +45,41 @@ export default function Hero() {
 
           {/* Social Links */}
           <div className="flex items-center gap-4 pt-4">
-            <a href="https://github.com/BangJhen" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:text-blue-600 hover:border-blue-600 transition-colors">
+            <a href={portfolioData.personal.socials.github} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:text-blue-600 hover:border-blue-600 transition-colors">
               <FaGithub size={20} />
             </a>
-            <a href="https://www.linkedin.com/in/ammar-ridho/" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:text-blue-600 hover:border-blue-600 transition-colors">
+            <a href={portfolioData.personal.socials.linkedin} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:text-blue-600 hover:border-blue-600 transition-colors">
               <FaLinkedin size={20} />
             </a>
           </div>
         </div>
 
-        {/* Right Content */}
+        {/* Right Content (Image & Floating Cards) */}
         <div className="relative pt-12 md:pt-0">
+          {/* Main Image Container */}
           <div className="relative w-full aspect-[4/5] max-w-sm mx-auto rounded-[2rem] bg-gradient-to-b from-blue-50/80 to-white overflow-hidden">
             <Image 
-              src="/ammar-pp1.png"
-              alt="Ammar Ridho"
+              src="/profile-ammar2.png" 
+              alt="Muhammad Ammar Ridho" 
               fill
-              className="object-cover object-center translate-y-4"
+              className="object-cover object-bottom"
               priority
             />
           </div>
-        </div>
 
+          {/* Floating Card */}
+          <div className="absolute bottom-12 -right-4 md:-right-8 lg:-right-12 bg-white p-4 pr-12 rounded-2xl shadow-xl shadow-blue-900/5 flex items-center gap-4 border border-gray-50 animate-float">
+            <div className="w-12 h-12 bg-blue-50/80 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
+              <LineChart size={24} />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 font-medium mb-1">Machine Learning</p>
+              <p className="text-sm font-bold text-gray-900 leading-tight">& Data Science</p>
+            </div>
+            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full absolute top-6 right-5"></div>
+          </div>
+        </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

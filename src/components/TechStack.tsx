@@ -3,8 +3,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   Code2, Monitor, Server, Brain, BarChart3, Database, 
-  Sparkles, LayoutGrid, Wrench, Cpu, Rocket, Quote, ArrowRight 
+  Sparkles, LayoutGrid, Wrench, Cpu, Rocket, Quote, ArrowRight, icons 
 } from 'lucide-react';
+import portfolioData from '@/data/portfolio.json';
 import { 
   SiPython, SiTypescript, SiJavascript, SiGo, 
   SiReact, SiNextdotjs, SiTailwindcss, SiFramer, 
@@ -44,38 +45,7 @@ const getTechIcon = (tag: string) => {
 };
 
 export default function TechStack() {
-  const categories = [
-    {
-      title: '1. Languages',
-      icon: <Code2 size={24} />,
-      techs: ['Python', 'TypeScript', 'JavaScript']
-    },
-    {
-      title: '2. Frontend & Web',
-      icon: <Monitor size={24} />,
-      techs: ['React', 'Next.js', 'Tailwind CSS', 'Vite']
-    },
-    {
-      title: '3. Web Scraping',
-      icon: <Server size={24} />,
-      techs: ['Puppeteer', 'Axios', 'REST API']
-    },
-    {
-      title: '4. AI / Machine Learning',
-      icon: <Brain size={24} />,
-      techs: ['TensorFlow', 'PyTorch', 'scikit-learn', 'XGBoost', 'CatBoost', 'MediaPipe']
-    },
-    {
-      title: '5. Data & Analytics',
-      icon: <BarChart3 size={24} />,
-      techs: ['Pandas', 'NumPy', 'Jupyter', 'Matplotlib']
-    },
-    {
-      title: '6. Infra & Network',
-      icon: <Database size={24} />,
-      techs: ['Git', 'Docker', 'MikroTik']
-    }
-  ];
+  const categories = portfolioData.techStack.categories;
 
   return (
     <section id="tech-stack" className="w-full py-20 min-h-screen flex items-center bg-[#fafafa]">
@@ -108,34 +78,37 @@ export default function TechStack() {
             
             {/* Left Column: Categories Grid */}
             <div className="lg:col-span-8 grid md:grid-cols-2 gap-6">
-              {categories.map((cat, idx) => (
-                <div 
-                  key={idx} 
-                  className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-center gap-5 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-[#1F5CE3]/10 text-[#1F5CE3] flex items-center justify-center shrink-0">
-                      {cat.icon}
+              {categories.map((cat, idx) => {
+                const Icon = icons[cat.icon as keyof typeof icons] || icons.Circle;
+                return (
+                  <div 
+                    key={idx} 
+                    className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex items-center gap-5 mb-6">
+                      <div className="w-12 h-12 rounded-xl bg-[#1F5CE3]/10 text-[#1F5CE3] flex items-center justify-center shrink-0">
+                        <Icon size={24} />
+                      </div>
+                      <h3 className="font-bold text-gray-900 text-lg">{cat.title}</h3>
                     </div>
-                    <h3 className="font-bold text-gray-900 text-lg">{cat.title}</h3>
+                    
+                    <div className="flex flex-wrap gap-2.5">
+                      {cat.techs.map((tech, techIdx) => {
+                        const TechIcon = getTechIcon(tech);
+                        return (
+                          <span 
+                            key={techIdx}
+                            className="px-4 py-2 bg-gray-50 text-gray-600 text-[13px] font-medium rounded-xl border border-gray-100 flex items-center gap-2 hover:border-[#1F5CE3]/30 hover:bg-[#1F5CE3]/5 transition-colors"
+                          >
+                            {TechIcon && <span className="text-[#1F5CE3] text-[15px]">{TechIcon}</span>}
+                            {tech}
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
-                  
-                  <div className="flex flex-wrap gap-2.5">
-                    {cat.techs.map((tech, techIdx) => {
-                      const Icon = getTechIcon(tech);
-                      return (
-                        <span 
-                          key={techIdx}
-                          className="px-4 py-2 bg-gray-50 text-gray-600 text-[13px] font-medium rounded-xl border border-gray-100 flex items-center gap-2 hover:border-[#1F5CE3]/30 hover:bg-[#1F5CE3]/5 transition-colors"
-                        >
-                          {Icon && <span className="text-[#1F5CE3] text-[15px]">{Icon}</span>}
-                          {tech}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Right Column: Sidebar */}

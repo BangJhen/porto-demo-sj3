@@ -3,11 +3,22 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Mail, Phone, MapPin, Calendar, 
-  Send, Clock, CalendarDays 
+  Send, Clock, CalendarDays, icons 
 } from 'lucide-react';
 import { 
   FaLinkedin, FaGithub, FaTwitter, FaInstagram 
 } from 'react-icons/fa';
+import portfolioData from '@/data/portfolio.json';
+
+const getSocialIcon = (name: string) => {
+  switch (name.toLowerCase()) {
+    case 'github': return <FaGithub size={18} />;
+    case 'linkedin': return <FaLinkedin size={18} />;
+    case 'twitter': return <FaTwitter size={18} />;
+    case 'instagram': return <FaInstagram size={18} />;
+    default: return <Mail size={18} />;
+  }
+};
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -22,6 +33,9 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    
+    // TODO: Replace with actual API endpoint later
+    console.log('Form submitted:', formData);
     
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1500));
@@ -46,33 +60,33 @@ export default function Contact() {
 
   const contactInfo = [
     {
-      icon: <Mail size={20} />,
+      icon: 'Mail',
       title: 'Email',
-      value: 'jhenerar21@gmail.com'
+      value: portfolioData.personal.email
     },
     {
-      icon: <Phone size={20} />,
+      icon: 'Phone',
       title: 'Phone',
-      value: '0838-0864-0875'
+      value: portfolioData.personal.phone
     },
     {
-      icon: <MapPin size={20} />,
+      icon: 'MapPin',
       title: 'Location',
-      value: 'Kabupaten Bandung, Jawa Barat'
+      value: portfolioData.personal.location
     },
     {
-      icon: <Calendar size={20} />,
+      icon: 'Calendar',
       title: 'Availability',
-      value: 'Open for Opportunities'
+      value: portfolioData.personal.availability
     }
   ];
 
   const socialLinks = [
-    { icon: <FaLinkedin size={18} />, href: 'https://www.linkedin.com/in/ammar-ridho/' },
-    { icon: <FaGithub size={18} />, href: 'https://github.com/BangJhen' },
-    { icon: <FaTwitter size={18} />, href: '#' },
-    { icon: <FaInstagram size={18} />, href: '#' },
-    { icon: <Mail size={18} />, href: 'mailto:jhenerar21@gmail.com' }
+    { icon: 'linkedin', href: portfolioData.personal.socials.linkedin },
+    { icon: 'github', href: portfolioData.personal.socials.github },
+    { icon: 'twitter', href: portfolioData.personal.socials.twitter },
+    { icon: 'instagram', href: portfolioData.personal.socials.instagram },
+    { icon: 'mail', href: `mailto:${portfolioData.personal.email}` }
   ];
 
   return (
@@ -92,10 +106,10 @@ export default function Contact() {
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-[1.2] tracking-tight">
-            Let's Build Something <span className="text-[#1F5CE3]">Meaningful</span> Together
+            Let&apos;s Build Something <span className="text-[#1F5CE3]">Meaningful</span> Together
           </h2>
           <p className="text-gray-600 text-lg leading-relaxed">
-            I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!
+            I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!
           </p>
         </div>
 
@@ -107,35 +121,44 @@ export default function Contact() {
             {/* Contact Info Card */}
             <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100">
               <div className="space-y-8">
-                {contactInfo.map((info, idx) => (
-                  <div key={idx} className={`flex items-start gap-5 ${idx !== contactInfo.length - 1 ? 'pb-8 border-b border-gray-50' : ''}`}>
-                    <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#1F5CE3] flex items-center justify-center shrink-0">
-                      {info.icon}
+                {contactInfo.map((info, idx) => {
+                  const Icon = icons[info.icon as keyof typeof icons] || icons.Circle;
+                  return (
+                    <div key={idx} className={`flex items-start gap-5 ${idx !== contactInfo.length - 1 ? 'pb-8 border-b border-gray-50' : ''}`}>
+                      <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#1F5CE3] flex items-center justify-center shrink-0">
+                        <Icon size={20} />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-900 mb-1">{info.title}</h4>
+                        <p className="text-gray-500 text-sm">{info.value}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-1">{info.title}</h4>
-                      <p className="text-gray-500 text-sm">{info.value}</p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
             {/* Social Links */}
             <div>
               <h4 className="uppercase tracking-widest text-sm font-bold text-blue-600 mb-5">
-                Let's Connect
+                Let&apos;s Connect
               </h4>
               <div className="flex flex-wrap gap-4">
-                {socialLinks.map((link, idx) => (
-                  <a 
-                    key={idx}
-                    href={link.href}
-                    className="w-12 h-12 rounded-xl bg-white shadow-sm border border-gray-100 flex items-center justify-center text-[#1F5CE3] hover:bg-[#1F5CE3] hover:text-white transition-colors"
-                  >
-                    {link.icon}
-                  </a>
-                ))}
+                {socialLinks.map((link, idx) => {
+                  if (link.href === '#') return null; // Skip empty social links
+                  const Icon = getSocialIcon(link.icon);
+                  return (
+                    <a 
+                      key={idx}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-12 h-12 rounded-xl bg-white shadow-sm border border-gray-100 flex items-center justify-center text-[#1F5CE3] hover:bg-[#1F5CE3] hover:text-white transition-colors"
+                    >
+                      {Icon}
+                    </a>
+                  );
+                })}
               </div>
             </div>
 
@@ -147,7 +170,7 @@ export default function Contact() {
               
               <div className="mb-10">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Send Me a Message</h3>
-                <p className="text-gray-500">I'll get back to you as soon as possible.</p>
+                <p className="text-gray-500">I&apos;ll get back to you as soon as possible.</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -242,7 +265,7 @@ export default function Contact() {
             <div className="flex flex-col md:flex-row items-center gap-6 w-full md:w-auto md:justify-end">
               <div className="text-center md:text-left">
                 <h4 className="font-bold text-gray-900 mb-1">Prefer a quick chat?</h4>
-                <p className="text-gray-500 text-sm">Let's connect and discuss your ideas!</p>
+                <p className="text-gray-500 text-sm">Let&apos;s connect and discuss your ideas!</p>
               </div>
               <button className="shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-[#1F5CE3] text-[#1F5CE3] font-bold hover:bg-blue-50 transition-colors bg-white">
                 <CalendarDays size={18} /> Schedule a Call

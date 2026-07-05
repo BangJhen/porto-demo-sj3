@@ -8,6 +8,7 @@ import {
   SiPytorch, SiPandas, SiMongodb, SiScikitlearn, SiStreamlit, 
   SiPostgresql, SiFramer
 } from 'react-icons/si';
+import portfolioData from '@/data/portfolio.json';
 
 const getTechIcon = (tag: string) => {
   switch (tag.toLowerCase()) {
@@ -29,62 +30,7 @@ const getTechIcon = (tag: string) => {
 };
 
 export default function Projects() {
-  const projects = [
-    {
-      id: 1,
-      title: 'Video Analysis Pipeline (Data Slayer)',
-      desc: 'Landmark-based video analysis using MediaPipe and YOLOv8 for robust feature extraction and ensemble modeling (1st Place Kaggle).',
-      tags: ['Python', 'MediaPipe', 'YOLOv8', 'XGBoost'],
-      category: 'Computer Vision',
-      year: '2025',
-      image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=800',
-    },
-    {
-      id: 2,
-      title: 'Fraud Detection with Graph ML',
-      desc: 'Fraud detection system for P2P lending platforms using Graph Convolutional Networks (GCN) and optimized ensemble learning (GEMASTIK).',
-      tags: ['Python', 'PyTorch', 'PyG', 'XGBoost'],
-      category: 'Machine Learning',
-      year: '2025',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
-    },
-    {
-      id: 3,
-      title: 'Food Price Forecasting',
-      desc: 'Deep learning models (NHITS, NBEATSx, LSTM) to forecast daily food prices for 13 commodities across 34 Indonesian provinces.',
-      tags: ['Python', 'PyTorch', 'Deep Learning'],
-      category: 'Time Series',
-      year: '2025',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
-    },
-    {
-      id: 4,
-      title: 'Web Scraping Solutions',
-      desc: 'Automated web scraping and crawling pipelines for social media platforms with session handling for stable API responses.',
-      tags: ['TypeScript', 'Puppeteer', 'Axios'],
-      category: 'Data Engineering',
-      year: '2025',
-      image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=800',
-    },
-    {
-      id: 5,
-      title: 'CNN Optimization for MNIST',
-      desc: 'Implementation and optimization of Convolutional Neural Networks (CNN) architecture using Keras Tuner for MNIST datasets.',
-      tags: ['Python', 'TensorFlow', 'Keras'],
-      category: 'Deep Learning',
-      year: '2024',
-      image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&q=80&w=800',
-    },
-    {
-      id: 6,
-      title: 'Personal Portfolio Website',
-      desc: 'A modern, responsive single-page portfolio website built to showcase projects, skills, and experiences interactively.',
-      tags: ['React', 'Next.js', 'Tailwind CSS'],
-      category: 'Web Development',
-      year: '2025',
-      image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&q=80&w=800',
-    },
-  ];
+  const projects = portfolioData.projects.list;
 
   return (
     <section id="projects" className="w-full py-20 min-h-screen flex items-center bg-white">
